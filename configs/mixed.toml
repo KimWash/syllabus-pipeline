@@ -1,0 +1,13 @@
+# Backends can be mixed: a local model votes on everything, Claude (via the Claude Code CLI) breaks ties.
+[refine.voter]
+provider = "openai"
+base_url = "http://localhost:11434/v1"   # Ollama's OpenAI-compatible endpoint
+api_key_env = ""                         # no key
+model = "qwen2.5:14b"
+concurrency = 1
+
+[refine.tiebreak]
+provider = "cli"
+command = ["claude", "-p", "--model", "{model}", "--output-format", "text"]
+model = "claude-sonnet-5-5"
+timeout = 300

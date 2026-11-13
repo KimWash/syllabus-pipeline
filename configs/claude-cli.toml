@@ -1,0 +1,17 @@
+# Claude Code CLI in print mode (uses your Claude login; no API key). Slower: one process per batch.
+[refine]
+batch = 100
+
+[refine.voter]
+provider = "cli"
+command = ["claude", "-p", "--model", "{model}", "--output-format", "text"]
+model = "claude-haiku-5-5"
+concurrency = 2
+timeout = 300
+
+[refine.tiebreak]
+provider = "cli"
+command = ["claude", "-p", "--model", "{model}", "--output-format", "text"]
+model = "claude-sonnet-5-5"
+concurrency = 2
+timeout = 300

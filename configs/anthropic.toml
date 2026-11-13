@@ -1,0 +1,10 @@
+# Anthropic API directly (pip install anthropic; env ANTHROPIC_API_KEY).
+[refine.voter]
+provider = "anthropic"
+model = "claude-haiku-5-5"
+concurrency = 4
+
+[refine.tiebreak]
+provider = "anthropic"
+model = "claude-sonnet-5-5"
+concurrency = 4

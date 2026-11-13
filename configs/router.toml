@@ -1,0 +1,27 @@
+# Local OpenAI-compatible router (what the 2026-2 run used). Key from env LLM_KEY.
+[refine]
+batch = 50
+rounds = 3
+
+[refine.voter]                      # votes on every ambiguous wrap
+provider = "openai"
+base_url = "http://localhost:3001/v1"
+api_key_env = "LLM_KEY"
+model = "claude-haiku-5-5"
+concurrency = 2                     # 4 hit 429/502 on the router
+check_model = true                  # fail if the router answers with a different model
+
+[refine.tiebreak]                   # only where the voter disagrees with the corpus heuristic
+provider = "openai"
+base_url = "http://localhost:3001/v1"
+api_key_env = "LLM_KEY"
+model = "claude-sonnet-5-5"
+concurrency = 2
+check_model = true
+
+[upload]                            # optional: POST the result to your backend's import API
+endpoint = "https://api.example.com/syllabus/import"
+auth_header = "Authorization"      # header that carries the token
+token_env = "UPLOAD_TOKEN"         # env var holding the token
+field = "file"                     # multipart field name
+max_mb = 4                         # chunk size; large bodies may be dropped by the server
